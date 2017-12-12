@@ -1,10 +1,6 @@
 import os
 
-from selenium.common.exceptions import (NoSuchElementException,
-                                        WebDriverException,
-                                        ElementNotInteractableException,
-                                        StaleElementReferenceException,
-                                        InvalidArgumentException)
+from selenium.common.exceptions import (NoSuchElementException)
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 
@@ -12,6 +8,10 @@ BROWSER = webdriver.Firefox()
 ALL_DATA_cols = []
 DATES_WITHOUT_DATA = []
 CURRENT_COL_ARRANGEMENT = ''
+
+# User Variables
+beginning_year = 1997
+end_year = 2017
 
 
 def clear():
@@ -71,11 +71,10 @@ def grab_data(date):
     except NoSuchElementException:
         bad_date = "{}-{}-{}".format(year, month, day)
         DATES_WITHOUT_DATA.append(bad_date)
-        # print('NO DATA ON: {}'.format(bad_date))
+        print('NO DATA ON: {}'.format(bad_date))
         return False
 
     if "data not available" in center_element.text.lower():
-        # print("\nData not available for specified date\n")
         bad_date = "{}-{}-{}".format(year, month, day)
         DATES_WITHOUT_DATA.append(bad_date)
         print('NO DATA ON: {}'.format(bad_date))
@@ -99,14 +98,14 @@ def grab_data(date):
 if __name__ == "__main__":
     clear()
     print('<<<<<<< Sagehen Climate Data Web Scraper >>>>>>>')
-    for year in range(2007, 2008):
+    for year in range(beginning_year, end_year + 1):
         print('YEAR: ', year)
         for month in range(1, 13):
             print('MONTH: ', month)
             for day in range(1, 32):
-                # if year == 1997 and month in [1, 2, 3, 11]:
-                #     bad_date = "{}-{}-{}".format(year, month, day)
-                #     DATES_WITHOUT_DATA.append(bad_date)
+                if year == 1997 and month in [1, 2, 3, 11]:
+                    bad_date = "{}-{}-{}".format(year, month, day)
+                    DATES_WITHOUT_DATA.append(bad_date)
                 if year == 2005 and month in [4, 5]:
                     bad_date = "{}-{}-{}".format(year, month, day)
                     DATES_WITHOUT_DATA.append(bad_date)
