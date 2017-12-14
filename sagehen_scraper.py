@@ -29,6 +29,7 @@ output_file_name = "sagehen_climate_data_{}{}-{}{}".format(start_month,
                                                            start_year,
                                                            end_month,
                                                            end_year)
+data_columns = [1, 3, 4, 6, 8, 10, 11, 13, 15]
 
 
 def clear():
@@ -60,7 +61,7 @@ def choose_date(datetime_obj):
         day_select.select_by_index(datetime_obj.day-1)
     except NoSuchElementException:
         print("\n There is not a {} day in the {} month of {}.".format(
-                                                day_num, month_num, year_num))
+                    datetime_obj.day, datetime_obj.month, datetime_obj.year))
         return False
 
     metric_element = BROWSER.find_element_by_xpath(
@@ -91,7 +92,7 @@ def grab_data(datetime_obj):
         DATES_WITHOUT_DATA.append(bad_date)
         print('NO DATA ON: {}'.format(bad_date))
         return False
-    
+
     data_table = []
     data_row = []
 
@@ -105,7 +106,7 @@ def grab_data(datetime_obj):
             if counter == 0:
                 hour, am_pm = num.split(' ')
                 data_row.append(time_fix(int(hour), am_pm))
-            elif counter in [1, 3, 4, 6, 8, 10, 11, 13, 15]:
+            elif counter in data_columns:
                 if num == '':
                     num = 'NAN'
                 data_row.append(num)
@@ -128,10 +129,12 @@ def time_fix(hour, am_pm):
             hour = hour + 12
     return '{}:00'.format(hour)
 
+
 def write_headers(fieldnames):
     with open(output_file_name, 'a') as csv_file:
         hourlywriter = csv.DictWriter(csv_file, fieldnames=fieldnames)
         hourlywriter.writeheader()
+
 
 def write_data(data_row, fieldnames):
     with open(output_file_name, 'a') as csv_file:
@@ -181,8 +184,6 @@ if __name__ == "__main__":
                 if year == 1997 and month in [1, 2, 3, 4, 11]:
                     pass
                 elif year == 2000 and month >= 7:
-                    pass
-                elif year == 2000 and month in range(6):
                     pass
                 else:
                     try:
