@@ -1,7 +1,6 @@
 import csv
 import datetime
 import os
-# from os import
 
 
 from selenium.common.exceptions import (NoSuchElementException)
@@ -26,7 +25,7 @@ start_year = 2000
 start_month = "JUL"
 end_year = 2001
 end_month = "AUG"
-output_file_name = "sagehen_climate_data_{}{}-{}{}".format(start_month,
+output_file_name = "sagehen_climate_data_{}{}-{}{}.csv".format(start_month,
                                                            start_year,
                                                            end_month,
                                                            end_year)
@@ -207,7 +206,7 @@ if __name__ == "__main__":
                             grab_data(date)
 
     BROWSER.quit()
-    os.system("say 'Sagehen Web Scraper Finished'")
+    # os.system("say 'Sagehen Web Scraper Finished'")
 
     # # dates = [[1997, 4, 1], [1997, 4, 3], [2000, 7, 1], [2001, 9, 1],
     # #          [2001, 9, 19], [2002, 10, 1], [2002, 10, 3]]
