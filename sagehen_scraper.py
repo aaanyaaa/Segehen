@@ -1,6 +1,7 @@
 import csv
 import datetime
 import os
+# from os import
 
 
 from selenium.common.exceptions import (NoSuchElementException)
@@ -22,14 +23,21 @@ FIELDNAMES = ['DATE', 'HOUR OF DAY ENDING AT L.S.T',
 
 # User Variables
 start_year = 2000
-start_month = "APR"
-end_year = 2000
-end_month = "DEC"
+start_month = "JUL"
+end_year = 2001
+end_month = "AUG"
 output_file_name = "sagehen_climate_data_{}{}-{}{}".format(start_month,
                                                            start_year,
                                                            end_month,
                                                            end_year)
-data_columns = [1, 3, 4, 6, 8, 10, 11, 13, 15]
+# This list specifies which <td> tag (by their position) in each row should
+# contain data.
+# Zero (its the time of day column) is left off initially, because there is a
+# conditional that specifically deals with converting it from a 12hr clock to
+# a 24hr clock.                                               
+data_columns = [1, 3, 4, 5, 7, 8, 9, 11, 12, 13, 14, 15, 17, 19]
+
+# REMEMBER TO CONFIGURE THE COLUMNS IN 'write_data()`.
 
 
 def clear():
@@ -93,7 +101,8 @@ def grab_data(datetime_obj):
         print('NO DATA ON: {}'.format(bad_date))
         return False
 
-    data_table = []
+    # enable for testing
+    # data_table = []
     data_row = []
 
     rows = BROWSER.find_elements_by_class_name('data')
@@ -103,18 +112,22 @@ def grab_data(datetime_obj):
         data_row.append(datetime_obj.strftime("%Y-%m-%d"))
         for num in nums:
             num = num.text
+            # enable for testing
+            # print(num)
             if counter == 0:
                 hour, am_pm = num.split(' ')
                 data_row.append(time_fix(int(hour), am_pm))
-            elif counter in data_columns:
+            elif counter in data_columns:  # var specified above
                 if num == '':
                     num = 'NAN'
                 data_row.append(num)
             counter += 1
-        data_table.append(data_row)
+        # enable for testing
+        # data_table.append(data_row)
         write_data(data_row, FIELDNAMES)
         data_row = []
-    return data_table
+    # enable for testing
+    # return data_table
 
 
 def time_fix(hour, am_pm):
@@ -146,27 +159,28 @@ def write_data(data_row, fieldnames):
             'TOTAL SOLAR RAD (K W-hr/m^2)': data_row[2],
             'AVE WIND SPEED (m/s)': data_row[3],
             'V. WIND DIR (Deg)': data_row[4],
-            'MAX WIND SPEED (m/s)': 'NAN',
-            'AIR TEMP AVE (Deg C)': data_row[5],
-            'AIR TEMP MAX (Deg C)': 'NAN',
-            'AIR TEMP MIN (Deg C)': 'NAN',
+            'MAX WIND SPEED (m/s)': data_row[5],
+            'AIR TEMP AVE (Deg C)': data_row[6],
+            'AIR TEMP MAX (Deg C)': data_row[7],
+            'AIR TEMP MIN (Deg C)': data_row[8],
             'SOIL TEMP AVE (Deg C)': 'NAN',
             'SOIL TEMP MAX (Deg C)': 'NAN',
             'SOIL TEMP MIN (Deg C)': 'NAN',
-            'RELATIVE HUMIDITY AVE (%)': data_row[6],
-            'RELATIVE HUMIDITY MAX (%)': 'NAN',
-            'RELATIVE HUMIDITY MIN (%)': 'NAN',
-            'DEW PT. (Deg C)': data_row[7],
-            'WET BULB (Deg C)': data_row[8],
-            'BARO. PRESS. (mb)': data_row[9],
+            'RELATIVE HUMIDITY AVE (%)': data_row[9],
+            'RELATIVE HUMIDITY MAX (%)': data_row[10],
+            'RELATIVE HUMIDITY MIN (%)': data_row[11],
+            'DEW PT. (Deg C)': data_row[12],
+            'WET BULB (Deg C)': data_row[13],
+            'BARO. PRESS. (mb)': data_row[14],
             'SNOW DEPTH (mm)': 'NAN',
-            'TOTAL PRECIP (mm)': data_row[10],
+            'TOTAL PRECIP (mm)': data_row[15],
         })
 
 
 def delete_driver_log():
-    os.remove('geckodriver.log')
-    print("Deleted Driver Log")
+    if os.path.isfile('geckodriver.log'):
+        os.remove('geckodriver.log')
+        print("Deleted Driver Log")
 
 
 if __name__ == "__main__":
@@ -176,14 +190,11 @@ if __name__ == "__main__":
         print('YEAR: {}'.format(year))
         for month in range(1, 13):
             print('MONTH: {}'.format(month))
-            try:
-                delete_driver_log()
-            except FileNotFoundError:
-                pass
+            delete_driver_log()
             for day in range(1, 32):
-                if year == 1997 and month in [1, 2, 3, 4, 11]:
+                if year == 2000 and month <= 6:
                     pass
-                elif year == 2000 and month >= 7:
+                elif year == 2001 and month >= 9:
                     pass
                 else:
                     try:
@@ -194,21 +205,19 @@ if __name__ == "__main__":
                         choose_date(date)
                         if date:
                             grab_data(date)
+
     BROWSER.quit()
     os.system("say 'Sagehen Web Scraper Finished'")
 
     # # dates = [[1997, 4, 1], [1997, 4, 3], [2000, 7, 1], [2001, 9, 1],
     # #          [2001, 9, 19], [2002, 10, 1], [2002, 10, 3]]
-    # dates = [[1997, 4, 1], [1997, 4, 3]]
+    # dates = [[2000, 7, 17], ]
     # for date_ints in dates:
-    #     year_num, month_num, day_num = date_ints
-
-    #     date = datetime.datetime(year_num, month_num, day_num)
+    #     year, month, day = date_ints
+    #     date = datetime.datetime(year, month, day)
     #     choose_date(date)
-    #     clean_data = grab_data(date)
-    #     for row in clean_data:
-    #         print(row)
-    #     print('')
-    #     # input()
+    #     if date:
+    #         clean_table = grab_data(date)
+    #         print(clean_table)
  
 
