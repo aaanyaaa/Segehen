@@ -21,7 +21,7 @@ FIELDNAMES = ['DATE', 'HOUR OF DAY ENDING AT L.S.T',
               'SNOW DEPTH (mm)', 'TOTAL PRECIP (mm)']
 
 # User Variables
-start_year = 1997
+start_year = 2000
 start_month = "APR"
 end_year = 2000
 end_month = "DEC"
@@ -157,6 +157,11 @@ def write_data(data_row, fieldnames):
         })
 
 
+def delete_driver_log():
+    os.remove('geckodriver.log')
+    print("Deleted Driver Log")
+
+
 if __name__ == "__main__":
     clear()
     print('<<<<<<< Sagehen Climate Data Web Scraper >>>>>>>')
@@ -164,16 +169,26 @@ if __name__ == "__main__":
         print('YEAR: {}'.format(year))
         for month in range(1, 13):
             print('MONTH: {}'.format(month))
+            try:
+                delete_driver_log()
+            except FileNotFoundError:
+                pass
             for day in range(1, 32):
-                if year == 1997 and month in [1, 2, 3, 11]:
+                if year == 1997 and month in [1, 2, 3, 4, 11]:
                     pass
                 elif year == 2000 and month >= 7:
                     pass
+                elif year == 2000 and month in range(6):
+                    pass
                 else:
-                    date = datetime.datetime(year, month, day)
-                    choose_date(date)
-                    if date:
-                        grab_data(date)
+                    try:
+                        date = datetime.datetime(year, month, day)
+                    except ValueError:
+                        pass
+                    else:
+                        choose_date(date)
+                        if date:
+                            grab_data(date)
     BROWSER.quit()
     os.system("say 'Sagehen Web Scraper Finished'")
 
