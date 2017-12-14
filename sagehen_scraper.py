@@ -128,6 +128,10 @@ def time_fix(hour, am_pm):
             hour = hour + 12
     return '{}:00'.format(hour)
 
+def write_headers(fieldnames):
+    with open(output_file_name, 'a') as csv_file:
+        hourlywriter = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        hourlywriter.writeheader()
 
 def write_data(data_row, fieldnames):
     with open(output_file_name, 'a') as csv_file:
@@ -205,5 +209,5 @@ if __name__ == "__main__":
     #         print(row)
     #     print('')
     #     # input()
-    BROWSER.quit()
+ 
 
