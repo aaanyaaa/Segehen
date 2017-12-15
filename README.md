@@ -16,8 +16,8 @@ To use any of the scripts in this repository you'll need to:
 Run the following command while inside the directory with the `geckodriver`.
 * `$ sudo mv geckodriver /usr/local/bin`
 
-## `sagehen_scraper.py`
-Near the top of the file you'll find the following lines:
+## `sagehen_scraper_<dates that it works with>.py`
+Near the top of the files you'll find the following lines:
 ```python
 # User Variables
 start_year = 2002
@@ -25,4 +25,4 @@ start_month = "OCT"
 end_year = 2017
 end_month = "DEC"
 ```
-You may adjust these accordingly to collect the data desired.
+You may adjust these accordingly to collect the data desired within the constraints of the scraper's date range.
