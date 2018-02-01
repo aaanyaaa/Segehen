@@ -46,7 +46,7 @@ You may adjust these accordingly to collect the data desired within the constrai
 - Earliest available data: April 1997.
 - Latest available data: December 2017.
 - Months included, but w/o data(Used NAN for missing data): NOV 97, APR 05, MAY 05
-- Numerous days with missing days throughout the data set (Used NAN for missing data)
+- Numerous days with missing data throughout the climate record (Used NAN for missing data)
 
 ### APR 1, 1997 Column Format
 
