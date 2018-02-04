@@ -20,6 +20,6 @@ def date_search(start_date, end_date):
     Returns a Pandas DataFrame with rows matching the specified date range
     """
     return pd.read_sql(
-        "SELECT * FROM hourdata WHERE date >= '{}' AND date <= '{}';".format(start_date, end_date),
+        "SELECT * FROM hourdata WHERE date_time >= '{}' AND date_time <= '{}';".format(start_date, end_date),
         con=DATEBASE
     )
