@@ -47,13 +47,16 @@ class Hour(peewee.Model):
 
     class Meta:
         database = DATABASE
-
+    
+    def __str__(self):
+        return self.date_time.strftime("%Y-%m-%d %H:%M")
+    
 
 def connect_and_create_tables():
     DATABASE.connect()
     DATABASE.create_tables([Hour], safe=True)
     DATABASE.close()
- 
+
 
 def build_db():
     with open('SAGEHEN_1APR1997-14DEC2017.csv') as csvfile:
