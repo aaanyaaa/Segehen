@@ -8,6 +8,51 @@ Includes files and Python scripts used to collect and clean the Sagehen Creek Fi
 
 ***
 
+## Current Issues, Notes and Observations about Data
+
+- Months included, but w/o data(Used NAN for missing data): NOV 97, APR 05, MAY 05
+- Numerous days with missing data throughout the climate record (Used NAN for missing data)
+- Snow Depth in the year of 2010 has all negative values, not possible
+- Precipitation data in the years 2001-2002 has over 40,000 mm of rain for either year, also not possible
+- Soil Temperature Measurement was relatively short lived (2002-2009) in terms of the entire climate record
+
+## Sagehen Data Column Changes
+
+- Earliest available data: April 1997.
+- Latest available data: December 2017.
+
+### APR 1, 1997 Column Format
+
+- Hour of Day Ending at L.S.T.
+- Total Solar Rad. ºKW-hr/m^2
+- Wind Ave. m/s
+- Wind V.Dir. Deg.
+- Air Temperature Mean Deg. C.
+- Relative Humidity Mean Percent
+- Dew Point Deg. C.
+- Wet Bulb Deg. C.
+- Baro. Press. mb.*
+
+### Addition of Columns on July 1, 2000
+
+- Addition of Wind Max. m/s
+- Addition of Air Temperature Max Deg. C.
+- Addition of Air Temperature Min Deg. C.
+- Addition of Relative Humdity Max Percent
+- Addition of Relative Humidity Min Percent
+
+### Addition of Columns on Sept 1, 2001
+
+- Addition of Snow Depth mm.
+
+### Addition of Columns on Oct 1, 2002
+
+- Soil Temperature Mean Deg. C.
+- Soil Temperature Max Deg. C.
+- Soil Temperature Min Deg. C.
+
+***
+
 ## Running the Scripts
 
 ### Requirements
@@ -39,41 +84,3 @@ end_month = "DEC"
 
 You may adjust these accordingly to collect the data desired within the constraints of the scraper's date range.
 
-***
-
-## Sagehen Data Column Changes
-
-- Earliest available data: April 1997.
-- Latest available data: December 2017.
-- Months included, but w/o data(Used NAN for missing data): NOV 97, APR 05, MAY 05
-- Numerous days with missing data throughout the climate record (Used NAN for missing data)
-
-### APR 1, 1997 Column Format
-
-- Hour of Day Ending at L.S.T.
-- Total Solar Rad. ºKW-hr/m^2
-- Wind Ave. m/s
-- Wind V.Dir. Deg.
-- Air Temperature Mean Deg. C.
-- Relative Humidity Mean Percent
-- Dew Point Deg. C.
-- Wet Bulb Deg. C.
-- Baro. Press. mb.*
-
-### Addition of Columns on July 1, 2000
-
-- Addition of Wind Max. m/s
-- Addition of Air Temperature Max Deg. C.
-- Addition of Air Temperature Min Deg. C.
-- Addition of Relative Humdity Max Percent
-- Addition of Relative Humidity Min Percent
-
-### Addition of Columns on Sept 1, 2001
-
-- Addition of Snow Depth mm.
-
-### Addition of Columns on Oct 1, 2002
-
-- Soil Temperature Mean Deg. C.
-- Soil Temperature Max Deg. C.
-- Soil Temperature Min Deg. C.
