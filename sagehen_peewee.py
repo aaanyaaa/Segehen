@@ -6,44 +6,80 @@ import peewee
 DATABASE = peewee.SqliteDatabase('sagehen.db')
 
 
-class Hour(peewee.Model):
+class HourData(peewee.Model):
     date_time = peewee.DateTimeField()
     solar_rad = peewee.CharField(
-        verbose_name="TOTAL SOLAR RAD (K W-hr/m^2)",  max_length=225)
+        verbose_name="TOTAL SOLAR RAD (K W-hr/m^2)",
+        max_length=225,
+    )
     wind_ave = peewee.CharField(
-        verbose_name="AVE WIND SPEED (m/s)",  max_length=225)
+        verbose_name="AVE WIND SPEED (m/s)",
+        max_length=225,
+    )
     wind_dir = peewee.CharField(
-        verbose_name="V. WIND DIR (Deg)",  max_length=225)
+        verbose_name="V. WIND DIR (Deg)",
+        max_length=225,
+    )
     wind_max = peewee.CharField(
-        verbose_name="MAX WIND SPEED (m/s)",  max_length=225)
+        verbose_name="MAX WIND SPEED (m/s)",
+        max_length=225,
+    )
     temp_ave = peewee.CharField(
-        verbose_name="AIR TEMP AVE (Deg C)",  max_length=225)
+        verbose_name="AIR TEMP AVE (Deg C)",
+        max_length=225,
+    )
     temp_max = peewee.CharField(
-        verbose_name="AIR TEMP MAX (Deg C)",  max_length=225)
+        verbose_name="AIR TEMP MAX (Deg C)",
+        max_length=225,
+    )
     temp_min = peewee.CharField(
-        verbose_name="AIR TEMP MIN (Deg C)",  max_length=225)
+        verbose_name="AIR TEMP MIN (Deg C)",
+        max_length=225,
+    )
     soil_tave = peewee.CharField(
-        verbose_name="SOIL TEMP AVE (Deg C)",  max_length=225)
+        verbose_name="SOIL TEMP AVE (Deg C)",
+        max_length=225,
+    )
     soil_tmax = peewee.CharField(
-        verbose_name="SOIL TEMP MAX (Deg C)",  max_length=225)
+        verbose_name="SOIL TEMP MAX (Deg C)",
+        max_length=225,
+    )
     soil_tmin = peewee.CharField(
-        verbose_name="SOIL TEMP MIN (Deg C)",  max_length=225)
+        verbose_name="SOIL TEMP MIN (Deg C)",
+        max_length=225,
+    )
     rh_ave = peewee.CharField(
-        verbose_name="RELATIVE HUMIDITY AVE (%)",  max_length=225)
+        verbose_name="RELATIVE HUMIDITY AVE (%)",
+        max_length=225,
+    )
     rh_max = peewee.CharField(
-        verbose_name="RELATIVE HUMIDITY MAX (%)",  max_length=225)
+        verbose_name="RELATIVE HUMIDITY MAX (%)",
+        max_length=225,
+    )
     rh_min = peewee.CharField(
-        verbose_name="RELATIVE HUMIDITY MIN (%)",  max_length=225)
+        verbose_name="RELATIVE HUMIDITY MIN (%)",
+        max_length=225,
+    )
     dew_pt = peewee.CharField(
-        verbose_name="DEW PT. (Deg C)",  max_length=225)
+        verbose_name="DEW PT. (Deg C)",
+        max_length=225,
+    )
     wet_bulb = peewee.CharField(
-        verbose_name="WET BULB (Deg C)",  max_length=225)
+        verbose_name="WET BULB (Deg C)",
+        max_length=225,
+    )
     pressure = peewee.CharField(
-        verbose_name="BARO. PRESS. (mb)",  max_length=225)
+        verbose_name="BARO. PRESS. (mb)",
+        max_length=225,
+    )
     snow = peewee.CharField(
-        verbose_name="SNOW DEPTH (mm)",  max_length=225)
+        verbose_name="SNOW DEPTH (mm)",
+        max_length=225,
+    )
     precip = peewee.CharField(
-        verbose_name="TOTAL PRECIP (mm)",  max_length=225)
+        verbose_name="TOTAL PRECIP (mm)",
+        max_length=225,
+    )
 
     class Meta:
         database = DATABASE
@@ -54,7 +90,7 @@ class Hour(peewee.Model):
 
 def connect_and_create_tables():
     DATABASE.connect()
-    DATABASE.create_tables([Hour], safe=True)
+    DATABASE.create_tables([HourData], safe=True)
     DATABASE.close()
 
 
@@ -63,11 +99,7 @@ def build_db():
         csv_reader = csv.DictReader(csvfile)
         for row in csv_reader:
             date_str = row['DATE'] + " " + row['HOUR OF DAY ENDING AT L.S.T']
-            print(date_str)
-            for col in row:
-                if col == 'NAN':
-                    col = 'NaN'
-            Hour.create(
+            HourData.create(
                 date_time=datetime.datetime.strptime(date_str, "%Y-%m-%d %H:%M"),
                 solar_rad=row["TOTAL SOLAR RAD (K W-hr/m^2)"],
                 wind_ave=row["AVE WIND SPEED (m/s)"],
