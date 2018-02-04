@@ -8,3 +8,4 @@ sagehen_climate_data_APR2000-DEC2000
 sagehen_climate_data_SEP2001-SEP2002.csv
 Sagehen Data Exploration.webarchive
 .ipynb_checkpoints/Sagehen Data Exploration-checkpoint.ipynb
+__pycache__/sagehen_peewee.cpython-36.pyc
