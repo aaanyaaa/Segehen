@@ -31,7 +31,7 @@ Includes files and Python scripts used to collect and clean the Sagehen Creek Fi
 - Relative Humidity Mean Percent
 - Dew Point Deg. C.
 - Wet Bulb Deg. C.
-- Baro. Press. mb.*
+- Baro. Press. mb.
 
 ### Addition of Columns on July 1, 2000
 
